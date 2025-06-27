@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\geometry{a4paper, margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\title{\textbf{Project Report: Paw \& Order}}
+\author{Stephanie Braga}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Statement}
+
+\subsection{The Challenge}
+The problem this project addresses is the creation of a single-player social deduction game. Unlike multiplayer games in this genre (e.g., "Among Us"), which rely on human-to-human deception and deduction, a single-player version requires artificial intelligence to simulate these behaviors.
+\begin{enumerate}
+    \item \textbf{To create a believable antagonist (the "Im-paw-ster"):} The AI must make strategic decisions that are not trivially obvious. It needs to balance sabotage, hiding its identity, and actively framing other NPCs to create a genuine sense of mystery and challenge for the player.
+    \item \textbf{To provide meaningful deductive assistance:} The game needs a mechanism to help the player analyze the events of each round. This requires an AI that can provide probabilistic guidance without simply solving the game for the player.
+\end{enumerate}
+
+\subsection{Game Description}
+The player is a "Pawsmonaut" on a starship populated by other AI-controlled pets. One of these pets is secretly the "Im-paw-ster."
+
+The game proceeds in rounds, each consisting of two phases:
+\begin{itemize}
+    \item \textbf{Night Phase:} The player and all NPCs choose a location to visit. The Im-paw-ster can choose to either fake a task to blend in or sabotage a location.
+    \item \textbf{Day Phase:} The results of the night are revealed. A "Detective" AI provides a statistical report on who is most likely to be the saboteur. Players then discuss and vote to eject one pet from the ship.
+\end{itemize}
+The Pawsmonauts win if they successfully eject the Im-paw-ster. The Im-paw-ster wins if it evades detection long enough or if the number of Pawsmonauts is reduced to one.
+
+\section{Approach}
+A dual-AI approach was adopted, using distinct algorithms.
+
+\subsection{Im-paw-ster AI: Minimax with Alpha-Beta Pruning}
+The Im-paw-ster's decision-making is an adversarial search problem. The Minimax algorithm was chosen to allow the AI to "think ahead" and plan its moves.
+
+\begin{itemize}
+    \item \textbf{Representation:} The game state is represented as a dictionary containing the status of all pets, their locations, suspicion scores, and the current turn number.
+    \item \textbf{Algorithm:} The AI constructs a decision tree to a set depth (3 moves). It simulates its own moves (MAX nodes) and the crew's likely reaction, voting for the most suspicious pet (MIN nodes).
+    \item \textbf{Heuristic Evaluation Function:} To score the outcomes at the leaves of the tree, a heuristic function is used. The function rewards outcomes where an innocent is framed or ejected and heavily penalizes outcomes where the Im-paw-ster's own suspicion score rises or it gets ejected.
+    \item \textbf{Optimization:} Alpha-Beta Pruning is implemented to cut off branches of the search tree that are guaranteed to be worse than a move already found, speeding up the decision process.
+\end{itemize}
+
+\subsection{Detective AI: Naive Bayes Classifier}
+The Detective's task is a probabilistic classification problem.
+
+\begin{itemize}
+    \item \textbf{Features:} The model uses a set of boolean features gathered after each round: \texttt{was\_at\_sabotage\_location}, \texttt{completed\_task}, and \texttt{was\_alone}.
+    \item \textbf{Probabilities:} The classifier uses pre-defined conditional probabilities.
+    \item \textbf{Calculation:} For each pet, the AI calculates a "likelihood" score by multiplying a base probability by the probabilities of the observed evidence. These raw scores are then normalized across all living pets to produce a final suspicion percentage that sums to 100\%.
+\end{itemize}
+
+\section{Description of the Software}
+
+\subsection{Components and Architecture}
+The application is built on a client-server model, separating the user interface from the game logic.
+
+\begin{itemize}
+    \item \textbf{Front-End (Client):} Built with HTML, CSS, and JavaScript, this component is responsible for rendering the game interface. The JavaScript (`script.js') handles user input and communicates with the backend via API calls.
+    \item \textbf{Back-End (Server):} A Python application using the Flask web framework. `app.py' contains all the core game logic, the AI classes, and the API endpoints that the front-end calls to advance the game state.
+\end{itemize}
+
+\subsection{Programming Language and Libraries}
+\begin{itemize}
+    \item \textbf{Python 3:} Used for the entire backend and AI logic.
+    \item \textbf{Flask:} Web framework used to create the server and API.
+    \item \textbf{HTML5, CSS3, JavaScript}.
+\end{itemize}
+
+\section{Evaluation}
+The software was evaluated qualitatively through iterative play-testing.
+
+\begin{itemize}
+    \item \textbf{Im-paw-ster Performance:} The Minimax AI plays effectively and strategically. With a search depth of 3, it is capable of making non-obvious moves, such as faking a task in a crowded room to lower its suspicion or sabotaging a location to frame a specific, already-suspicious pet.
+    \item \textbf{Detective Performance:} The Naive Bayes AI performs its role well. It successfully narrows the pool of suspects for the player by highlighting pets with suspicious behavior.
+    \item \textbf{Overall Gameplay:} The Im-paw-ster is smart enough to create genuine confusion, and the Detective is helpful enough to give the player a fighting chance.
+\end{itemize}
+
+\section{Conclusion}
+\begin{enumerate}
+    \item Minimax is effective for creating a strategic, planning-oriented AI opponent.
+    \item Naive Bayes is an excellent choice for creating an ``analyst'' AI that deals with uncertainty and provides probabilistic guidance.
+    \item Game balancing is crucial. The initial ``perfect'' evidence made the game too easy. Introducing statistical noise and balancing the heuristic values were essential for creating an enjoyable level of difficulty.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+    \bibitem{russell_norvig}
+    S. Russell and P. Norvig, \textit{Artificial Intelligence: A Modern Approach}. Prentice Hall, 4th ed., 2020.
+
+    \bibitem{flask_docs}
+    The Flask Documentation. Available: \url{https://flask.palletsprojects.com/}
+
+    \bibitem{among_us}
+    Innersloth, \textit{Among Us}. Available: \url{https://www.innersloth.com/games/among-us/}
+\end{thebibliography}
+
+\end{document}

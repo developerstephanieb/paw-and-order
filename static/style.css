@@ -1,0 +1,371 @@
+/* --- FONT IMPORT --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+/* --- BASE & BODY STYLES --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #0f172a;
+    /* bg-slate-900 */
+    color: #e2e8f0;
+    /* text-slate-200 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* --- LAYOUT CONTAINER --- */
+#game-container {
+    width: 100%;
+    max-width: 56rem;
+    /* max-w-3xl */
+    margin: auto;
+}
+
+/* --- SCREEN MANAGEMENT --- */
+.screen {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.screen.active {
+    display: block;
+}
+
+#intro-screen,
+#game-over-screen {
+    text-align: center;
+    background-color: rgba(30, 41, 59, 0.5);
+    /* bg-slate-800/50 */
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid #334155;
+    /* border-slate-700 */
+}
+
+/* --- TYPOGRAPHY --- */
+.title {
+    font-size: 3rem;
+    /* text-5xl */
+    font-weight: 700;
+    color: #22d3ee;
+    /* text-cyan-400 */
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #94a3b8;
+    /* text-slate-400 */
+    margin-bottom: 2rem;
+}
+
+.turn-title {
+    font-size: 1.875rem;
+    /* text-3xl */
+    font-weight: 700;
+    color: #22d3ee;
+    /* text-cyan-400 */
+}
+
+/* --- FORMS & BUTTONS --- */
+.input-group {
+    max-width: 24rem;
+    /* max-w-sm */
+    margin: auto;
+}
+
+.input-group label {
+    display: block;
+    font-size: 1.125rem;
+    /* text-lg */
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+#player-name {
+    width: 100%;
+    background-color: #0f172a;
+    /* bg-slate-900 */
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 2px solid #334155;
+    /* border-slate-700 */
+    text-align: center;
+}
+
+#player-name:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #06b6d4;
+    /* ring-2 ring-cyan-500 */
+}
+
+.btn {
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    transform-origin: center;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn.btn-primary {
+    max-width: 24rem;
+    width: 100%;
+    margin: 1.5rem auto 0 auto;
+    background-color: #0891b2;
+    /* bg-cyan-600 */
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.3), 0 4px 6px -2px rgba(6, 182, 212, 0.2);
+}
+
+.btn.btn-primary:hover {
+    background-color: #06b6d4;
+    /* bg-cyan-500 */
+}
+
+/* --- MAIN GAME UI --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#ai-thinking-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    /* text-sm */
+    color: #94a3b8;
+    /* text-slate-400 */
+}
+
+#ai-thinking-indicator.hidden {
+    display: none;
+}
+
+.spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 2px dashed #22d3ee;
+    /* border-cyan-400 */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.crew-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+
+    /* sm: */
+    .crew-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.crew-card {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: all 0.3s;
+    background-color: #334155;
+    /* bg-slate-700 */
+}
+
+.crew-card.ejected {
+    background-color: #1e293b;
+    /* bg-slate-800 */
+    opacity: 0.5;
+}
+
+.crew-card .avatar {
+    font-size: 2.25rem;
+}
+
+/* text-4xl */
+.crew-card .name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+
+    /* md: */
+    .game-layout {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.panel {
+    background-color: rgba(30, 41, 59, 0.5);
+    /* bg-slate-800/50 */
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid #334155;
+    /* border-slate-700 */
+}
+
+#action-title {
+    font-size: 1.25rem;
+    /* text-xl */
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #67e8f9;
+    /* text-cyan-300 */
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.button-grid button {
+    background-color: #334155;
+    /* bg-slate-700 */
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.button-grid button:hover {
+    background-color: #475569;
+    /* bg-slate-600 */
+    transform: scale(1.05);
+}
+
+.button-grid button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button-grid button.vote-btn {
+    background-color: #991b1b;
+    /* bg-red-800 */
+}
+
+.button-grid button.vote-btn:hover {
+    background-color: #b91c1c;
+    /* bg-red-700 */
+}
+
+.button-grid button.skip-btn {
+    background-color: #475569;
+    /* bg-slate-600 */
+}
+
+.button-grid button.skip-btn:hover {
+    background-color: #64748b;
+    /* bg-slate-500 */
+}
+
+#report-area {
+    min-height: 300px;
+    max-h: 60vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.message-bubble {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    animation: popIn 0.3s ease-out;
+}
+
+.message-bubble .icon {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.message-bubble.type-normal {
+    background-color: #334155;
+}
+
+.message-bubble.type-player {
+    background-color: #2563eb;
+    color: white;
+}
+
+.message-bubble.type-sabotage {
+    background-color: #991b1b;
+    color: white;
+    font-weight: 700;
+}
+
+.message-bubble.type-detective {
+    background-color: #d97706;
+}
+
+.message-bubble.type-system {
+    background-color: #164e63;
+    color: #67e8f9;
+    font-style: italic;
+}
+
+.message-bubble.type-vote {
+    background-color: #475569;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

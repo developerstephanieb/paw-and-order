@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paw & Order: Polished Edition</title>
+
+    <!-- Link to the external CSS stylesheet in the 'static' folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Link to the external JavaScript file. 'defer' ensures it runs after the HTML is parsed. -->
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+
+<body>
+
+    <div id="game-container" class="w-full max-w-3xl mx-auto">
+
+        <!-- Intro Screen -->
+        <div id="intro-screen" class="screen active">
+            <h1 class="title">🐾 Paw & Order 🐾</h1>
+            <p class="subtitle">One of your fellow crewmates is a secret Im-paw-ster!</p>
+            <div class="input-group">
+                <label for="player-name">Enter Your Pet's Name:</label>
+                <input type="text" id="player-name" value="Pawsmonaut Prime">
+            </div>
+            <button id="start-game-btn" class="btn btn-primary">
+                Start Mission
+            </button>
+        </div>
+
+        <!-- Main Game Screen -->
+        <div id="main-game-screen" class="screen">
+            <header>
+                <h2 class="turn-title">Turn <span id="turn-counter">1</span></h2>
+                <div id="ai-thinking-indicator" class="hidden">
+                    <div class="spinner"></div>
+                    <span>Processing turn...</span>
+                </div>
+            </header>
+
+            <div id="crew-status-cards" class="crew-grid">
+                <!-- Pet cards will be generated here by script.js -->
+            </div>
+
+            <div class="game-layout">
+                <div id="action-area" class="panel">
+                    <h3 id="action-title"></h3>
+                    <div id="action-buttons" class="button-grid"></div>
+                </div>
+
+                <div id="report-area" class="panel">
+                    <!-- Game messages will appear here by script.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h2 id="game-over-title"></h2>
+            <p id="game-over-subtitle"></p>
+            <button id="play-again-btn" class="btn btn-primary">
+                Play Again
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

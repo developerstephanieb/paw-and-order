@@ -1,0 +1,43 @@
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE
+.vscode/
+.history
+
+# OS specific 
+.DS_Store
+
+# Latex
+*.aux
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ind
+*.ilg
+*.log
+*.lof
+*.lot
+*.out
+*.toc
+*.synctex.gz
+*.pdf
