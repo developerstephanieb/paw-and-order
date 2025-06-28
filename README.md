@@ -55,9 +55,12 @@ paw-and-order-app/
 ├── templates/
 │   └── index.html      (HTML Frontend Structure)
 │
-└── static/
-    ├── style.css       (CSS Styling)
-    └── script.js       (JavaScript Frontend Logic)
+├── static/
+│   ├── style.css       (CSS Styling)
+│   └── script.js       (JavaScript Frontend Logic)
+│
+└── report/
+    └── report.tex      (LaTeX Project Report Source)
 ```
 
 ---
@@ -82,6 +85,9 @@ This file is the **frontend logic**. Its role has changed significantly from the
 * Sending the player's actions (like choosing a location or voting) to the Python backend.
 * Receiving the updated game state from the backend after a turn is processed.
 * Rendering the received game state to the user by dynamically updating the HTML.
+
+### `report/report.tex`
+This file contains the LaTeX source code for the formal project report. It details the project's problem statement, technical approach, software architecture, evaluation, and conclusions.
 
 ---
 
